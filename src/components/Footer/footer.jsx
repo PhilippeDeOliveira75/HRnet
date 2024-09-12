@@ -4,8 +4,10 @@ function Footer() {
 
     return (
 
-        <footer className="footer">
-            <p>Je suis le Footer</p>
+        <footer className="footer__Container">
+
+            <p className='footer__CopyRight'> © Copyright 2024 | All Rights Reserved | Powered by NeOz </p>
+        
         </footer>
 
     )

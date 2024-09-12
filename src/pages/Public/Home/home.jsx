@@ -1,11 +1,20 @@
+import { Link } from 'react-router-dom'
 import './home.scss'
 
-function Home() {
+function Home () {
 
     return (
 
-        <div>
-            <h1>Home</h1>
+        <div className="home__Container">
+
+            <Link to='/create/' className='home__Link'>
+                <button className="home__Button"> Create Employee </button>
+            </Link>
+            
+            <Link to='/current/' className='home__Link'>
+                <button className="home__Button"> Current Employee </button>
+            </Link>
+            
         </div>
     )
 }

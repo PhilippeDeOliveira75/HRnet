@@ -32,12 +32,20 @@ export default defineConfig({
         replacement: path.resolve(__dirname, 'src/pages')
       },
       {
-        find: '@services',
-        replacement: path.resolve(__dirname, 'src/_services')
+        find: '@helpers',
+        replacement: path.resolve(__dirname, 'src/_helpers')
       },
       {
         find: '@utils',
         replacement: path.resolve(__dirname, 'src/_utils')
+      },
+      {
+        find: '@data',
+        replacement: path.resolve(__dirname, 'src/_data')
+      },
+      {
+        find: '@redux',
+        replacement: path.resolve(__dirname, 'src/redux')
       }
     ]
   },

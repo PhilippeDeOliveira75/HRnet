@@ -1,0 +1,82 @@
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  html {
+    font-family: 'Raleway', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  body {
+    margin: 0 auto;
+  }
+
+  :root {
+    --color-1: #0B162C; 
+    --color-2: #1C2942; 
+    --color-3: #3B556D; 
+    --color-4: #5FC2BA; 
+    --color-5: #FFFFFF;
+  }
+  
+  h1 {
+    all: unset;
+    font-size: 20px;
+    font-weight: 700;
+  }
+   
+  h2 {
+    all: unset;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  h3 {
+    all: unset;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  h4 {
+    all: unset;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  
+  p {
+    all: unset;
+    font-size: 12px;
+    font-weight: 400;
+    color: #000000;
+  }
+
+  button, ul, li {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: none;
+    list-style: none;
+    font: inherit;
+    color: inherit;
+    text-align: inherit;
+    cursor: pointer;
+  }
+  
+  button {
+    background-color: transparent;
+    border-radius: 0;
+    appearance: none;
+  }
+  
+  ul {
+    list-style-type: none;
+  }
+  
+  li {
+    display: block;
+  }
+  

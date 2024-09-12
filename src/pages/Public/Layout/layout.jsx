@@ -9,9 +9,9 @@ function PublicLayout  ()  {
 
         <div className='layout'>
 
-             <div className="main-content">
+            <Header />
 
-                <Header />
+            <div className="main-content">
 
                 <Outlet />
 

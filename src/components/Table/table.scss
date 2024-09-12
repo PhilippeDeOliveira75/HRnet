@@ -1,0 +1,41 @@
+.table__Container {
+    padding: 20px;
+  
+    .w__Search {
+      input {
+        margin-left: 10px;
+        width: 250px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+    }
+  
+    .pagination__Controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
+  
+    .pagination__Buttons {
+      display: flex;
+    }
+  
+    .pagination__Button {
+      margin: 0 5px;
+      padding: 5px 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: #f9f9f9;
+      cursor: pointer;
+      font-size: 14px;
+  
+      &.active {
+        font-weight: bold;
+        background-color: #007bff;
+        color: #fff;
+      }
+    }
+  }
+  
