@@ -21,6 +21,8 @@ Ce projet fournit un formulaire d'ajout avec vérifications des champs, ainsi qu
 - Formulaire réactif et vérifié
 - Tableau complet avec multiple fonctions (tri, recherche, ...)
 
+<br>
+
 Pour utiliser HR net, assurez-vous d'avoir les éléments suivants installés :
 - react: 18.3.1
 - react-dom: 18.3.1
