@@ -1,47 +1,28 @@
-import './table.scss'
+import './table.scss';
+import React from 'react';
+import { CompactTable } from '@table-library/react-table-library/compact';
+import { useTheme } from '@table-library/react-table-library/theme';
+import { getTheme } from '@table-library/react-table-library/baseline';
+import { usePagination } from '@table-library/react-table-library/pagination';
+import { useSort } from '@table-library/react-table-library/sort';
 
-import React from 'react'
-import { CompactTable } from '@table-library/react-table-library/compact'
-import { useTheme } from '@table-library/react-table-library/theme'
-import { getTheme } from '@table-library/react-table-library/baseline'
-import { usePagination } from '@table-library/react-table-library/pagination'
-import { useSort } from '@table-library/react-table-library/sort'
+function Table({ users }) {
+  const theme = useTheme(getTheme());
+  const [search, setSearch] = React.useState("");
 
-
-function Table ({ users }) {
-
-  const theme = useTheme(getTheme())
-
-  // État de recherche
-  const [search, setSearch] = React.useState("")
-
-  // Filtrage des données en fonction de la recherche
   const filteredUsers = users.filter(user =>
     Object.values(user).some(value =>
       value.toString().toLowerCase().includes(search.toLowerCase())
     )
-  )
+  );
 
-  // Configuration de la pagination avec les données filtrées
   const pagination = usePagination({ nodes: filteredUsers }, {
-    state: {
-      page: 0,
-      size: 10, 
-    },
-    onChange: onPaginationChange,
-  })
+    state: { page: 0, size: 10 },
+  });
 
-  // Fonction de gestion des changements de pagination
-  function onPaginationChange(action, state) {
-    console.log(action, state)
-  }
-
-  // Configuration du tri
   const sort = useSort(
     { nodes: filteredUsers },
-    {
-      onChange: onSortChange,
-    },
+    {},
     {
       sortFns: {
         FIRST_NAME: (array) => array.sort((a, b) => a.firstName.localeCompare(b.firstName)),
@@ -52,16 +33,11 @@ function Table ({ users }) {
         CITY: (array) => array.sort((a, b) => a.city.localeCompare(b.city)),
         STATE: (array) => array.sort((a, b) => a.state.localeCompare(b.state)),
         ZIP_CODE: (array) => array.sort((a, b) => a.zipCode.localeCompare(b.zipCode)),
-        DEPARTMENT: (array) => array.sort((a, b) => a.department.localeCompare(b.department))
+        DEPARTMENT: (array) => array.sort((a, b) => a.department.localeCompare(b.department)),
       }
     }
-  )
+  );
 
-  function onSortChange(action, state) {
-    console.log(action, state)
-  }
-
-  // Définition des colonnes pour le tableau avec tri
   const COLUMNS = [
     { label: 'First Name', renderCell: (item) => item.firstName, sort: { sortKey: 'FIRST_NAME' } },
     { label: 'Last Name', renderCell: (item) => item.lastName, sort: { sortKey: 'LAST_NAME' } },
@@ -72,36 +48,47 @@ function Table ({ users }) {
     { label: 'State', renderCell: (item) => item.state, sort: { sortKey: 'STATE' } },
     { label: 'Zip Code', renderCell: (item) => item.zipCode, sort: { sortKey: 'ZIP_CODE' } },
     { label: 'Department', renderCell: (item) => item.department, sort: { sortKey: 'DEPARTMENT' } }
-  ]
+  ];
 
-  // Structure des données pour le tableau avec pagination
   const data = {
     nodes: pagination.state.nodes || filteredUsers.map((user, index) => ({ ...user, id: `user-${index}` }))
-  }
+  };
 
   return (
-    
     <div className="table__Container">
       <div className='w__Search'>
         <label htmlFor="search">
-          Search :
+          Search:
           <input
             id="search"
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            aria-label="Search employees"
           />
         </label>
       </div>
       <br />
 
       <CompactTable
-        columns={COLUMNS}
-        data={data}
-        theme={theme}
-        pagination={pagination}
-        sort={sort}
-      />
+  columns={COLUMNS}
+  data={data}
+  theme={theme}
+  pagination={pagination}
+  sort={sort}
+  role="table"
+  aria-labelledby="employeeTable"
+>
+  {data.nodes.map((node, index) => (
+    <tr role="row" key={node.id}>
+      {COLUMNS.map((column) => (
+        <td role="cell" key={column.label}>
+          {column.renderCell(node)}
+        </td>
+      ))}
+    </tr>
+  ))}
+</CompactTable>
 
       <br />
       <div className="pagination__Controls">
@@ -114,6 +101,7 @@ function Table ({ users }) {
               type="button"
               className={`pagination__Button ${pagination.state.page === index ? 'active' : ''}`}
               onClick={() => pagination.fns.onSetPage(index)}
+              aria-label={`Go to page ${index + 1}`}
             >
               {index + 1}
             </button>
@@ -121,7 +109,7 @@ function Table ({ users }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Table
+export default Table;

@@ -12,9 +12,10 @@ const FormField = ({ type, id, name, value, onChange, label, options, defaultTex
           id={id}
           selection={options}
           defaultText={defaultText}
-          value={value}
+          value={value || ''}
           onChange={(selectedValue) => onChange(name, selectedValue)}
         />
+
         {error && <span className="error">{error}</span>}
       </div>
     );
@@ -25,7 +26,7 @@ const FormField = ({ type, id, name, value, onChange, label, options, defaultTex
       <div className="w__labelAndInput">
         <span className="label__Title" htmlFor={id}>{label}</span>
         <Calendar
-          selectedDate={value}
+          selectedDate={value || null} // Utilise null si la valeur est undefined
           onDateChange={(date) => onChange(name, date)}
         />
         {error && <span className="error">{error}</span>}
@@ -40,9 +41,10 @@ const FormField = ({ type, id, name, value, onChange, label, options, defaultTex
         type={type}
         id={id}
         name={name}
-        value={value}
+        value={value || ''} // Assure-toi qu'il n'est jamais undefined
         onChange={onChange}
       />
+
       {error && <span className="error">{error}</span>}
     </div>
   );

@@ -1,22 +1,19 @@
-import './form.scss'
-import { STATES, DEPARTMENTS } from '@data/data'
+import './form.scss';
+import { STATES, DEPARTMENTS } from '@data/data';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { addUser, addUserNoPersist } from '@redux/formSlice';
+import { ValidateFormat, ValidateRequiredFields } from '@helpers/formValidation';
+import FormField from '@helpers/formField';
+import { ModalComponent } from '@components/import';
 
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { addUser } from '@redux/formSlice';
+const DEFAULT_TEXT = 'Select department';
+const STATE_DEFAULT_TEXT = 'Choose state';
 
-import { ValidateFormat, ValidateRequiredFields } from '@helpers/formValidation'
-import FormField from '@helpers/formField'
-import { ModalComponent, Calendar } from '@components/import'
+function Form ({ isPersistent }) {
 
-
-const DEFAULT_TEXT = 'Select department'
-const STATE_DEFAULT_TEXT = 'Choose state'
-
-function Form() {
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.form.users);
-
+  
   const getInitialFormValues = () => ({
     firstName: '',
     lastName: '',
@@ -28,10 +25,22 @@ function Form() {
     zipCode: '',
     department: DEFAULT_TEXT,
   });
+  
 
   const [formValues, setFormValues] = useState(getInitialFormValues());
   const [errors, setErrors] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (isPersistent) {
+      const savedValues = localStorage.getItem('formValues');
+      if (savedValues) {
+        setFormValues(JSON.parse(savedValues));
+      }
+    } else {
+      setFormValues(getInitialFormValues()); // Réinitialiser si non persistant
+    }
+  }, [isPersistent]);
 
   useEffect(() => {
     const formatErrors = ValidateFormat(formValues);
@@ -46,15 +55,20 @@ function Form() {
     const allErrors = { ...requiredErrors, ...formatErrors };
 
     if (Object.keys(allErrors).length === 0) {
-      // Convertir les dates en chaînes de caractères avant de les envoyer au Redux store
       const formattedValues = {
         ...formValues,
         dob: formValues.dob ? formValues.dob.toISOString().split('T')[0] : '',
         startDate: formValues.startDate ? formValues.startDate.toISOString().split('T')[0] : '',
       };
 
-      // Envoi des données au Redux store
-      dispatch(addUser(formattedValues));
+      // Ajoute l'utilisateur dans Redux avec ou sans persistance
+      if (isPersistent) {
+        localStorage.setItem('formValues', JSON.stringify(formattedValues)); // Sauvegarde dans localStorage
+        dispatch(addUser(formattedValues));
+      } else {
+        dispatch(addUserNoPersist(formattedValues));
+      }
+
       setIsModalOpen(true);
       setFormValues(getInitialFormValues());
     } else {
@@ -76,13 +90,7 @@ function Form() {
       }));
     }
   };
-
-  const handleDateChange = (field, date) => {
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      [field]: date,
-    }));
-  };
+  
 
   const fields = [
     { type: 'text', id: 'firstName', name: 'firstName', label: 'First Name' },

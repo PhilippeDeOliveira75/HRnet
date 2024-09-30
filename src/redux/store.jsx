@@ -1,4 +1,3 @@
-// store.jsx
 import { configureStore } from '@reduxjs/toolkit'
 import formReducer from './formSlice'
 

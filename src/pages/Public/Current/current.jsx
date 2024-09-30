@@ -1,17 +1,14 @@
-import './current.scss'
+import './current.scss';
+import { useSelector } from 'react-redux';
+import { Table } from '@components/import';
 
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { Table } from '@components/import'
+function Current() {
 
-function Current () {
-  
-  // Accéder à l'état du store Redux
-  const users = useSelector((state) => state.form.users)
+  const users = useSelector((state) => state.form.users);
 
   // Vérifie si `users` est un tableau
   if (!Array.isArray(users)) {
-    return <p>Error: Users data is not available.</p>
+    return <p>Error: Users data is not available.</p>;
   }
 
   return (
