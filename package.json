@@ -3,6 +3,17 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "author":"NeOz",
+  "license": "MIT",
+  "description": "A HR employee listing app",
+  "keywords": [
+    "react",
+    "vite",
+    "redux",
+    "table",
+    "employee",
+    "hr"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
